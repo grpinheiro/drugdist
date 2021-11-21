@@ -1,10 +1,10 @@
 import { ICreateProfileDTO } from "@modules/profiles/dtos/ICreateProfileDTO";
-import { IProfileRepository } from "@modules/profiles/repositories/IProfilesRepository";
+import { IProfilesRepository } from "@modules/profiles/repositories/IProfilesRepository";
 import { getRepository, Repository } from "typeorm";
 
 import { Profile } from "../entities/Profile";
 
-class ProfilesRepository implements IProfileRepository {
+class ProfilesRepository implements IProfilesRepository {
   private repository: Repository<Profile>;
 
   constructor() {
