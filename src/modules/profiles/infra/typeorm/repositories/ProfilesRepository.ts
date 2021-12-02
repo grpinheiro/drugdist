@@ -19,6 +19,21 @@ class ProfilesRepository implements IProfilesRepository {
 
     await this.repository.save(profile);
   }
+
+  async findById(id: string): Promise<Profile> {
+    const profile = await this.repository.findOne(id);
+    return profile;
+  }
+
+  async findByName(name: string): Promise<Profile> {
+    const profile = await this.repository.findOne({ name });
+    return profile;
+  }
+
+  async findAll(): Promise<Profile[]> {
+    const profiles = await this.repository.find();
+    return profiles;
+  }
 }
 
 export { ProfilesRepository };

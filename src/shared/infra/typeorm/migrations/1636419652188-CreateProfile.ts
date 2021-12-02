@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
 
 export class CreateProfile1636419652188 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

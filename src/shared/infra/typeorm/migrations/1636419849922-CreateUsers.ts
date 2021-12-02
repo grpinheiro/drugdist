@@ -1,4 +1,6 @@
+import { hash } from "bcryptjs";
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
 
 export class CreateUsers1636419849922 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -46,6 +48,7 @@ export class CreateUsers1636419849922 implements MigrationInterface {
           {
             name: "cpf_cnpj",
             type: "varchar",
+            isUnique: true,
           },
           {
             name: "cep",
@@ -77,6 +80,11 @@ export class CreateUsers1636419849922 implements MigrationInterface {
             type: "varchar",
             isNullable: true,
           },
+          {
+            name: "created_at",
+            type: "timestamp",
+            default: "now()",
+          },
         ],
         foreignKeys: [
           {
@@ -88,6 +96,19 @@ export class CreateUsers1636419849922 implements MigrationInterface {
           },
         ],
       })
+    );
+
+    const idProfileAdmin = uuidV4();
+
+    await queryRunner.query(
+      `INSERT INTO profiles (id, name) VALUES('${idProfileAdmin}','Administrador')`
+    );
+
+    const passwordHash = await hash("admin", 8);
+
+    await queryRunner.query(
+      `INSERT INTO users (id, name, email, password, profile_id, cpf_cnpj, main_phone) VALUES ('${uuidV4()}', 
+      'Administrador', 'admin@grdev.com.br', '${passwordHash}', '${idProfileAdmin}', '000.000.000-00', '(00)00000-0000')`
     );
   }
 
